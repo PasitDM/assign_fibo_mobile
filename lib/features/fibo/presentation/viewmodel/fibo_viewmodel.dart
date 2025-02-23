@@ -2,16 +2,35 @@ import 'package:flutter/material.dart';
 import '../models/fibo_model_ui.dart';
 
 class FiboViewModel {
-  final ValueNotifier<List<FiboModel>> mainList = ValueNotifier(
-    List.generate(41, (i) => FiboModel(index: i, value: _fibonacci(i), type: _getType(_fibonacci(i)))),
-  );
-
+  final ValueNotifier<List<FiboModel>> mainList = ValueNotifier([]);
   final ValueNotifier<List<FiboModel>> circleList = ValueNotifier([]);
   final ValueNotifier<List<FiboModel>> squareList = ValueNotifier([]);
   final ValueNotifier<List<FiboModel>> crossList = ValueNotifier([]);
 
   final ValueNotifier<FiboModel?> recentAdd = ValueNotifier(null);
   final ValueNotifier<FiboModel?> recentRemove = ValueNotifier(null);
+
+  FiboViewModel() {
+    init();
+  }
+
+  void init() {
+    final fiboList = List<FiboModel>.generate(
+      41,
+      (i) => FiboModel(index: i, value: _fibonacci(i), type: _getType(_fibonacci(i))),
+    );
+
+    mainList.value = fiboList;
+  }
+
+  int _fibonacci(int n) => n < 2 ? n : _fibonacci(n - 1) + _fibonacci(n - 2);
+
+  FiboType _getType(int num) {
+    var mod = num % 3;
+    if (mod == 0) return FiboType.circle;
+    if (mod == 1) return FiboType.square;
+    return FiboType.cross;
+  }
 
   void moveToTypeList(FiboModel number) {
     mainList.value = mainList.value.where((n) => n != number).toList();
@@ -47,12 +66,14 @@ class FiboViewModel {
     recentAdd.value = null;
   }
 
-  static int _fibonacci(int n) => n < 2 ? n : _fibonacci(n - 1) + _fibonacci(n - 2);
-
-  static FiboType _getType(int num) {
-    var mod = num % 3;
-    if (mod == 0) return FiboType.circle;
-    if (mod == 1) return FiboType.square;
-    return FiboType.cross;
+  ValueNotifier<List<FiboModel>> getTypeList(FiboType type) {
+    switch (type) {
+      case FiboType.circle:
+        return circleList;
+      case FiboType.cross:
+        return crossList;
+      case FiboType.square:
+        return squareList;
+    }
   }
 }

@@ -60,7 +60,7 @@ class _FiboScreenState extends State<FiboScreen> {
       context: context,
       builder: (context) {
         return ValueListenableBuilder<List<FiboModel>>(
-          valueListenable: _getTypeList(viewModel, type),
+          valueListenable: viewModel.getTypeList(type),
           builder: (context, numbers, child) {
             return ListView.builder(
               itemCount: numbers.length,
@@ -84,17 +84,6 @@ class _FiboScreenState extends State<FiboScreen> {
         );
       },
     );
-  }
-
-  ValueNotifier<List<FiboModel>> _getTypeList(FiboViewModel viewModel, FiboType type) {
-    switch (type) {
-      case FiboType.circle:
-        return viewModel.circleList;
-      case FiboType.cross:
-        return viewModel.crossList;
-      case FiboType.square:
-        return viewModel.squareList;
-    }
   }
 
   void _scrollToItem(int index) {
