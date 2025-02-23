@@ -69,6 +69,7 @@ This project is an assignment for state management in Flutter. It demonstrates t
     fvm flutter test
 
 ## Project Structure
+```
 assign_fibo_mobile/
 ├── lib/
 │   ├── core/
@@ -98,22 +99,21 @@ assign_fibo_mobile/
 │   │   └── viewmodel/
 │   │       └── fibo_viewmodel_test.dart
 │   └── widget_test.dart
-└── README.md
-
+```
 State Management
-The project uses the MVVM pattern with ChangeNotifier and AnimatedBuilder for state management.
-Example of Display list Fibonacci Display list Fibonacci
-![Mobile Main](assets/images/ex_display_fibo.gif)
+The project uses the MVVM pattern with ChangeNotifier and AnimatedBuilder for state management.  
+Example of Display list Fibonacci Display list Fibonacci  
+![Mobile Main](assets/images/ex_display_fibo.gif)  
 
-Example of added item only the same type Added item only the same type
-![Mobile Main](assets/images/ex_add_same_type.gif)
+Example of added item only the same type Added item only the same type  
+![Mobile Main](assets/images/ex_add_same_type.gif)  
 
-Example of When scrolling to highlighted one when showing modal Scrolling to highlighted item
-![Mobile Main](assets/images/ex_scrolling_highlight_model.gif)
+Example of When scrolling to highlighted one when showing modal Scrolling to highlighted item  
+![Mobile Main](assets/images/ex_scrolling_highlight_model.gif)  
 
-Example of what to do when pop When pop
-![Mobile Main](assets/images/ex_when_pop.gif)
+Example of what to do when pop When pop  
+![Mobile Main](assets/images/ex_when_pop.gif)  
 
-Coverage Report
-![Coverage Report](assets/images/coverage_report.png)
+Coverage Report  
+![Coverage Report](assets/images/coverage_report.png)  
 
