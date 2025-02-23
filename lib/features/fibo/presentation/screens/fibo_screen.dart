@@ -37,8 +37,9 @@ class _FiboScreenState extends State<FiboScreen> {
 
                     return FiboListTile(
                       fibonacciNumber: fibo,
+                      titleText: 'Index: ${fibo.index}, Number: ${fibo.value}',
                       isHighlighted: fibo == viewModel.recentRemove.value,
-                      color: AppColors.red300.withValues(alpha: 0.8),
+                      color: AppColors.errorColor.withOpacity(0.8),
                       onTap: () {
                         viewModel.moveToTypeList(fibo);
                         _showBottomSheet(context, viewModel, fibo.type);
@@ -69,6 +70,8 @@ class _FiboScreenState extends State<FiboScreen> {
                 return FiboListTile(
                   fibonacciNumber: fibo,
                   isHighlighted: fibo == viewModel.recentAdd.value,
+                  titleText: 'Number: ${fibo.value}',
+                  subtitleText: 'Index: ${fibo.index}',
                   onTap: () {
                     viewModel.removeFromTypeList(fibo);
                     Navigator.pop(context);
@@ -88,9 +91,9 @@ class _FiboScreenState extends State<FiboScreen> {
       case FiboType.circle:
         return viewModel.circleList;
       case FiboType.cross:
-        return viewModel.squareList;
-      case FiboType.square:
         return viewModel.crossList;
+      case FiboType.square:
+        return viewModel.squareList;
     }
   }
 

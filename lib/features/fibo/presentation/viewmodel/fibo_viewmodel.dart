@@ -20,10 +20,10 @@ class FiboViewModel {
         circleList.value = [...circleList.value, number]..sort((a, b) => a.index.compareTo(b.index));
         break;
       case FiboType.cross:
-        squareList.value = [...squareList.value, number]..sort((a, b) => a.index.compareTo(b.index));
+        crossList.value = [...crossList.value, number]..sort((a, b) => a.index.compareTo(b.index));
         break;
       case FiboType.square:
-        crossList.value = [...crossList.value, number]..sort((a, b) => a.index.compareTo(b.index));
+        squareList.value = [...squareList.value, number]..sort((a, b) => a.index.compareTo(b.index));
         break;
     }
     recentAdd.value = number;
@@ -36,10 +36,10 @@ class FiboViewModel {
         circleList.value = circleList.value.where((n) => n != number).toList();
         break;
       case FiboType.cross:
-        squareList.value = squareList.value.where((n) => n != number).toList();
+        crossList.value = crossList.value.where((n) => n != number).toList();
         break;
       case FiboType.square:
-        crossList.value = crossList.value.where((n) => n != number).toList();
+        squareList.value = squareList.value.where((n) => n != number).toList();
         break;
     }
     mainList.value = [...mainList.value, number]..sort((a, b) => a.index.compareTo(b.index));
@@ -51,8 +51,8 @@ class FiboViewModel {
 
   static FiboType _getType(int num) {
     var mod = num % 3;
-    if (mod == 0) return FiboType.circle; // 🔵 วงกลม
-    if (mod == 1) return FiboType.square; // 🔳 สี่เหลี่ยม
-    return FiboType.cross; // ❌ กากบาท
+    if (mod == 0) return FiboType.circle;
+    if (mod == 1) return FiboType.square;
+    return FiboType.cross;
   }
 }
