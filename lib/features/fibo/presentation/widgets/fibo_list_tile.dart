@@ -15,7 +15,7 @@ class FiboListTile extends StatelessWidget {
     required this.fibonacciNumber,
     required this.isHighlighted,
     required this.onTap,
-    this.color = Colors.green,
+    this.color = AppColors.doneColor,
     required this.titleText,
     this.subtitleText,
   });
