@@ -26,19 +26,19 @@ class _FiboScreenState extends State<FiboScreen> {
       body: Column(
         children: [
           Expanded(
-            child: ValueListenableBuilder<List<FiboModel>>(
-              valueListenable: viewModel.mainList,
-              builder: (context, numbers, child) {
+            child: AnimatedBuilder(
+              animation: viewModel,
+              builder: (context, child) {
                 return ListView.builder(
                   controller: _scrollController,
-                  itemCount: numbers.length,
+                  itemCount: viewModel.mainList.length,
                   itemBuilder: (context, index) {
-                    final fibo = numbers[index];
+                    final fibo = viewModel.mainList[index];
 
                     return FiboListTile(
                       fibonacciNumber: fibo,
                       titleText: 'Index: ${fibo.index}, Number: ${fibo.value}',
-                      isHighlighted: fibo == viewModel.recentRemove.value,
+                      isHighlighted: fibo == viewModel.recentRemove,
                       color: AppColors.errorColor.withValues(alpha: 0.8),
                       onTap: () {
                         viewModel.moveToTypeList(fibo);
@@ -59,9 +59,10 @@ class _FiboScreenState extends State<FiboScreen> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return ValueListenableBuilder<List<FiboModel>>(
-          valueListenable: viewModel.getTypeList(type),
-          builder: (context, numbers, child) {
+        return AnimatedBuilder(
+          animation: viewModel,
+          builder: (context, child) {
+            final numbers = viewModel.getTypeList(type);
             return ListView.builder(
               itemCount: numbers.length,
               itemBuilder: (context, index) {
@@ -69,13 +70,13 @@ class _FiboScreenState extends State<FiboScreen> {
 
                 return FiboListTile(
                   fibonacciNumber: fibo,
-                  isHighlighted: fibo == viewModel.recentAdd.value,
+                  isHighlighted: fibo == viewModel.recentAdd,
                   titleText: 'Number: ${fibo.value}',
                   subtitleText: 'Index: ${fibo.index}',
                   onTap: () {
                     viewModel.removeFromTypeList(fibo);
                     Navigator.pop(context);
-                    _scrollToItem(viewModel.mainList.value.indexOf(fibo));
+                    _scrollToItem(viewModel.mainList.indexOf(fibo));
                   },
                 );
               },
