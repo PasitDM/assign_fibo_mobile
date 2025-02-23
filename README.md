@@ -1,69 +1,52 @@
-# Fibonacci List App
+# PST Fibo List App - Flutter App  
 
-This project is an assignment for state management in Flutter. It demonstrates the following features:
+## 🚀 Overview  
+This project is an **assignment for state management in Flutter**. It demonstrates how to manage state using **MVVM + ChangeNotifier + AnimatedBuilder**, without using any third-party state management libraries.  
 
-1. **Scrollable Widget**: A widget that allows scrolling in any direction, containing a list of at least the first 40 Fibonacci numbers.
-2. **Display Widget**: Each Fibonacci number is displayed alongside a symbol or icon representing its type (e.g., square, cross, circle).
-3. **Tap Functionality**: Tapping a number displays a BottomSheet containing items of the same type. Tapping an item in the BottomSheet removes it from the BottomSheet, adds it back to the main list, highlights it, and scrolls to it.
+## 🛠 Tech Stack  
+- **Flutter SDK**: 3.29.0  
+- **Dart SDK**  
+- **State Management**: ChangeNotifier + AnimatedBuilder (MVVM)  
 
-## Features
+## 🎯 Features  
+- **Scrollable Widget**: A list of at least **40 Fibonacci numbers** that allows scrolling.  
+- **Display Widget**: Each Fibonacci number is displayed alongside a symbol/icon representing its type (**square, cross, circle**).  
+- **Tap Functionality**:  
+  - Tapping a number displays a **BottomSheet** with items of the same type.  
+  - Tapping an item moves it back to the main list, highlights it, and scrolls to it.  
 
-### 1. Scrollable Widget
-- A list of Fibonacci numbers that allows scrolling.
-- Contains at least the first 40 Fibonacci numbers.
-
-### 2. Display Widget
-- Each Fibonacci number is displayed with:
-  - The number itself (e.g., 0, 1, 1, 2, 3, 5, ...).
-  - A symbol or icon representing the type associated with that Fibonacci number (e.g., square, cross, circle).
-
-### 3. Tap Functionality
-- Tapping a number displays a BottomSheet with items of the same type.
-- Tapping an item in the BottomSheet:
-  - Removes the item from the BottomSheet.
-  - Adds it back to the main list.
-  - Highlights the item in the main list.
-  - Scrolls to the highlighted item.
-
-## Bonus
-- Implemented without third-party libraries.
-
-## Getting Started
-
-### Prerequisites
-- Flutter SDK (Version: 3.29.0)
-- Dart SDK
+---
 
 ### Installation & Run
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/fibonacci_list_app.git
-
-2. Navigate to the project directory:
-    cd fibonacci_list_app
-
-3. Get the dependencies:
-    fvm use 3.29.0
-    fvm flutter pub get
-
-4. Running the App (Run the app on an emulator or physical device)
-    fvm flutter run
+```sh
+git clone https://github.com/yourusername/fibonacci_list_app.git
+cd assign_fibo_mobile
+fvm use 3.29.0
+fvm flutter pub get
+fvm flutter run
+```
 
 ### Running Tests
-1. Run Unit Tests:
+1. Unit Tests:
     fvm flutter test test/presentation/viewmodel/fibo_viewmodel_test.dart
+    Tests logic in FiboViewModel to verify that Fibonacci numbers move correctly between lists.
 
-2. Run Widget Tests:
+2. Widget Tests:
     fvm flutter test test/widget_test.dart
+    Ensures UI elements function correctly (e.g., tapping a number opens a BottomSheet).
 
-3. Run Golden Tests:
-   1. Create golden images:
-    fvm flutter test --update-goldens
-   2. Run golden tests:
-    fvm flutter test test/golden_test/fibo_screen_golden_test.dart
+3. Golden Tests:
+```
+  # Create golden images
+  fvm flutter test --update-goldens
+  # Run golden tests
+  fvm flutter test test/golden_test/fibo_screen_golden_test.dart
+```
+  Verifies that the UI matches expected screenshots.
 
-4. Run Integration Tests:
+4. Integration Tests:
     fvm flutter test test/integration_test/integration_test.dart
+  Simulates user interactions to check if the entire app functions correctly.
 
 5. Run All Test
     fvm flutter test
@@ -100,20 +83,21 @@ assign_fibo_mobile/
 │   │       └── fibo_viewmodel_test.dart
 │   └── widget_test.dart
 ```
-State Management
-The project uses the MVVM pattern with ChangeNotifier and AnimatedBuilder for state management.  
-Example of Display list Fibonacci Display list Fibonacci  
+
+## The project uses the MVVM pattern with ChangeNotifier and AnimatedBuilder for state management.
+### 4 Examples
+### 1. Example of Display list Fibonacci Display list Fibonacci  
 ![Mobile Main](assets/images/ex_display_fibo.gif)  
 
-Example of added item only the same type Added item only the same type  
+### 2. Example of added item only the same type Added item only the same type  
 ![Mobile Main](assets/images/ex_add_same_type.gif)  
 
-Example of When scrolling to highlighted one when showing modal Scrolling to highlighted item  
+### 3. Example of When scrolling to highlighted one when showing modal Scrolling to highlighted item  
 ![Mobile Main](assets/images/ex_scrolling_highlight_model.gif)  
 
-Example of what to do when pop When pop  
+### 4. Example of what to do when pop When pop  
 ![Mobile Main](assets/images/ex_when_pop.gif)  
 
-Coverage Report  
+## Coverage Report  
 ![Coverage Report](assets/images/coverage_report.png)  
 
