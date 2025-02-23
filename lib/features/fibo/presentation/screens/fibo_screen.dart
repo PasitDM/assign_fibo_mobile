@@ -39,7 +39,7 @@ class _FiboScreenState extends State<FiboScreen> {
                       fibonacciNumber: fibo,
                       titleText: 'Index: ${fibo.index}, Number: ${fibo.value}',
                       isHighlighted: fibo == viewModel.recentRemove.value,
-                      color: AppColors.errorColor.withOpacity(0.8),
+                      color: AppColors.errorColor.withValues(alpha: 0.8),
                       onTap: () {
                         viewModel.moveToTypeList(fibo);
                         _showBottomSheet(context, viewModel, fibo.type);
