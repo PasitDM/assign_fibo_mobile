@@ -15,7 +15,7 @@ void main() {
     expect(find.text('Index: 4, Number: 3'), findsOneWidget);
   });
 
-  testWidgets('Move and remove Fibonacci number', (WidgetTester tester) async {
+  testWidgets('Move and remove Fibonacci num  fvm flutter test test/presentation/viewmodel/fibo_viewmodel_test.dartber', (WidgetTester tester) async {
     // Build the FiboScreen widget
     await tester.pumpWidget(MaterialApp(home: FiboScreen()));
 
