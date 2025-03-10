@@ -15,6 +15,7 @@ class _FiboScreenState extends State<FiboScreen> {
   late final FiboViewModel viewModel;
 
   final double _itemHeight = 56.0;
+  bool _hasScrolledBottomSheet = false;
 
   @override
   void initState() {
@@ -68,22 +69,27 @@ class _FiboScreenState extends State<FiboScreen> {
   }
 
   void _showBottomSheet(FiboType type) {
+    _hasScrolledBottomSheet = false; // reset flag
+
     showModalBottomSheet(
       context: context,
       builder: (_) {
         final numbers = viewModel.getTypeList(type);
 
-        // Scroll after frame rendered
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          final index = numbers.indexWhere((item) => item == viewModel.recentAdd);
-          if (index != -1) {
-            _scrollToItem(
-              index,
-              controller: _scrollSheetController,
-              duration: const Duration(milliseconds: 500),
-            );
-          }
-        });
+        if (!_hasScrolledBottomSheet) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final index = numbers.indexWhere((item) => item == viewModel.recentAdd);
+            if (index != -1) {
+              _scrollToItem(
+                index,
+                controller: _scrollSheetController,
+                duration: const Duration(milliseconds: 500),
+              );
+            }
+
+            _hasScrolledBottomSheet = true; // กันไม่ให้มันเลื่อนซ้ำๆ
+          });
+        }
 
         return ListView.builder(
           controller: _scrollSheetController,
@@ -99,6 +105,7 @@ class _FiboScreenState extends State<FiboScreen> {
               onTap: () {
                 viewModel.removeFromTypeList(fibo);
                 Navigator.pop(context);
+
                 final mainListIndex = viewModel.mainList.indexOf(fibo);
                 _scrollToItem(mainListIndex);
               },
