@@ -10,13 +10,25 @@ class FiboScreen extends StatefulWidget {
 }
 
 class _FiboScreenState extends State<FiboScreen> {
-  final _scrollController = ScrollController();
-  late FiboViewModel viewModel;
+  late final ScrollController _scrollController;
+  late final ScrollController _scrollSheetController;
+  late final FiboViewModel viewModel;
+
+  final double _itemHeight = 56.0;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+    _scrollSheetController = ScrollController();
     viewModel = FiboViewModel();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+    _scrollSheetController.dispose();
   }
 
   @override
@@ -28,7 +40,7 @@ class _FiboScreenState extends State<FiboScreen> {
           Expanded(
             child: AnimatedBuilder(
               animation: viewModel,
-              builder: (context, child) {
+              builder: (_, __) {
                 return ListView.builder(
                   controller: _scrollController,
                   itemCount: viewModel.mainList.length,
@@ -42,7 +54,7 @@ class _FiboScreenState extends State<FiboScreen> {
                       color: AppColors.errorColor.withValues(alpha: 0.8),
                       onTap: () {
                         viewModel.moveToTypeList(fibo);
-                        _showBottomSheet(context, viewModel, fibo.type);
+                        _showBottomSheet(fibo.type);
                       },
                     );
                   },
@@ -55,30 +67,40 @@ class _FiboScreenState extends State<FiboScreen> {
     );
   }
 
-  void _showBottomSheet(BuildContext context, FiboViewModel viewModel, FiboType type) {
+  void _showBottomSheet(FiboType type) {
     showModalBottomSheet(
       context: context,
-      builder: (context) {
-        return AnimatedBuilder(
-          animation: viewModel,
-          builder: (context, child) {
-            final numbers = viewModel.getTypeList(type);
-            return ListView.builder(
-              itemCount: numbers.length,
-              itemBuilder: (context, index) {
-                final fibo = numbers[index];
+      builder: (_) {
+        final numbers = viewModel.getTypeList(type);
 
-                return FiboListTile(
-                  fibonacciNumber: fibo,
-                  isHighlighted: fibo == viewModel.recentAdd,
-                  titleText: 'Number: ${fibo.value}',
-                  subtitleText: 'Index: ${fibo.index}',
-                  onTap: () {
-                    viewModel.removeFromTypeList(fibo);
-                    Navigator.pop(context);
-                    _scrollToItem(viewModel.mainList.indexOf(fibo));
-                  },
-                );
+        // Scroll after frame rendered
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final index = numbers.indexWhere((item) => item == viewModel.recentAdd);
+          if (index != -1) {
+            _scrollToItem(
+              index,
+              controller: _scrollSheetController,
+              duration: const Duration(milliseconds: 500),
+            );
+          }
+        });
+
+        return ListView.builder(
+          controller: _scrollSheetController,
+          itemCount: numbers.length,
+          itemBuilder: (context, index) {
+            final fibo = numbers[index];
+
+            return FiboListTile(
+              fibonacciNumber: fibo,
+              isHighlighted: fibo == viewModel.recentAdd,
+              titleText: 'Number: ${fibo.value}',
+              subtitleText: 'Index: ${fibo.index}',
+              onTap: () {
+                viewModel.removeFromTypeList(fibo);
+                Navigator.pop(context);
+                final mainListIndex = viewModel.mainList.indexOf(fibo);
+                _scrollToItem(mainListIndex);
               },
             );
           },
@@ -87,7 +109,13 @@ class _FiboScreenState extends State<FiboScreen> {
     );
   }
 
-  void _scrollToItem(int index) {
-    _scrollController.animateTo(index * 56.0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+  void _scrollToItem(
+    int index, {
+    ScrollController? controller,
+    Duration duration = const Duration(seconds: 1),
+  }) {
+    final scrollController = controller ?? _scrollController;
+
+    scrollController.animateTo(index * _itemHeight, duration: duration, curve: Curves.easeInOut);
   }
 }
